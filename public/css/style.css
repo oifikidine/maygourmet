@@ -1,0 +1,40 @@
+/* Rcontenu principal */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #fdfdfd;
+  color: #333;
+  text-align: center;
+
+   /* Fond léger */
+  background: linear-gradient(135deg, #fff7f0, #ffe6e0);
+}
+
+/* Contenu principal */
+body {
+  padding: 50px 20px;
+}
+
+/* Titre */
+h1 {
+  color: #b73e3e;
+  margin-bottom: 15px;
+  font-size: 2.5rem;
+}
+
+/* Paragraphes */
+p {
+  max-width: 650px;
+  margin: 12px auto;
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Phrase mise en avant */
+p:last-child {
+  margin-top: 25px;
+  font-weight: bold;
+  color: #6b4f4f;
+  letter-spacing: 0.5px;
+}

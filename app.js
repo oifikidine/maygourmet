@@ -16,6 +16,9 @@ app.set('views', './views' );
 // Jje précise que nous utilision EJD pour les vues
 app.set('view engine', 'ejs');
 
+// je précise que j'utilise le dossier 'public' qui contient les fichiers statics
+app.use(express.static("public"));
+
 // Route GET : quand on tape une URL précise dans le navigateur
 // Ici : http://localhost:3085/api/accueil
 app.get('/api/accueil', (req, res) => {
