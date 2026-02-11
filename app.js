@@ -1,6 +1,12 @@
 // On importe le framework Express
 // Express permet de créer un serveur web facilement
-const express = require('express')
+const express = require('express');
+
+// j'importe le pilote Mysql2 utilisé pour interroger la BDD MySQL
+const mysql2 = require("mysql2");
+
+//j'importe le pilote express-myConnection utilisé pour se connecter à la BDD
+const myConnection = require('express-myconnection');
 
 // On importe le module "path" de Node.js
 // Il sert à gérer les chemins de fichiers (Windows, Mac, Linux)
@@ -8,7 +14,21 @@ const path = require('path')
 
 // On crée l'application Express
 // "app" représente notre application web
-const app = express()
+const app = express();
+
+// je configure les éléments attendus pour me connecter à la base de donnee
+const optionsConnexionBaseDeDonnees = {
+    host: "localhost",
+    user: "root",
+    password: "Dembouzeur976",
+    database: "maygourmet",
+    port: 3306,
+};
+
+/*Middleware pour se connecter à la BDD Mysql
+"pool" est la stratégie
+*/
+app.use(myConnection(mysql2, optionsConnexionBaseDeDonnees, "pool"));
 
 // je précise que les vues sont dans le dossier views
 app.set('views', './views' );
