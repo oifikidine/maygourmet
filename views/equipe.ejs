@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Notre équipe - May Gourmet</title>
+  <link rel="stylesheet" href="/css/equipe.css">
 </head>
 
 <body>
@@ -22,7 +23,17 @@
   <!-- Section membres de l'équipe -->
   <section>
     <h2>L’équipe</h2>
+    <% resultatEquipe.forEach(resultat => { %>
+      <div class="card">
+        <img class="team" src="/image/royce.jpg">
+        <div class="container">
+         <h4><%= resultat.nom %></h4>
+        <p><%= resultat.poste %></p>
 
+        </div>
+      </div>
+        
+   <% }) %>
     <article>
       <h3>Chef cuisinier</h3>
       <p>

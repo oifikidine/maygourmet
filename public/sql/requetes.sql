@@ -116,6 +116,46 @@ INSERT INTO plat (nom, description, prix, categorie) VALUES
 ('Milk-shake vanille', 'Vanille, lait, glace', 5, 'Boisson');
 
 
+
+
+
+
+/*
+TABLE EQUIPE
+*/
+
+CREATE TABLE equipe (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(155) NOT NULL,
+    poste VARCHAR(100) NOT NULL,
+    telephone VARCHAR(100),
+    email VARCHAR(255), 
+    date_embauche DATE NOT NULL,
+    salaire INT NOT NULL
+);
+
+
+/*
+INSERTION DES EQUIPE
+*/
+
+INSERT INTO equipe (nom, poste, telephone, email, date_embauche, salaire) VALUES
+('Ali Moussa', 'Responsable logistique', '0639001122', 'ali.moussa@gmail.com', '2022-05-10', 1800),
+('Fatima Abdou', 'Gestionnaire de stock', '0639003344', 'fatima.abdou@gmail.com', '2021-03-15', 1600),
+('Said Ahmed', 'Controle qualite', '0639005566', 'said.ahmed@gmail.com', '2020-11-01', 1700),
+('Mariam Soilihi', 'Responsable commercial', '0639007788', 'mariam.soilihi@gmail.com', '2019-06-20', 2100),
+('Youssouf Ali', 'Assistant administratif', '0639009900', 'youssouf.ali@gmail.com', '2023-01-08', 1500),
+('Amina Bakar', 'Comptable', '0639112233', 'amina.bakar@gmail.com', '2018-09-12', 2200),
+('Rachid Mohamed', 'Magasinier', '0639223344', 'rachid.mohamed@gmail.com', '2022-02-18', 1400),
+('Nassira Ali', 'Chargee clientele', '0639334455', 'nassira.ali@gmail.com', '2024-04-02', 1550),
+('Ibrahim Madi', 'Livreur', '0639445566', 'ibrahim.madi@gmail.com', '2023-07-25', 1300),
+('Halima Saindou', 'Assistante de direction', '0639556677', 'halima.saindou@gmail.com', '2020-10-30', 2000);
+
+
+
+
+
+
 /* =========================================================
    EXEMPLES DE REQUÊTES 
    ========================================================= */

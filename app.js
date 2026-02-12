@@ -26,7 +26,7 @@ const optionsConnexionBaseDeDonnees = {
 };
 
 /*Middleware pour se connecter à la BDD Mysql
-"pool" est la stratégie
+"pool" est la stratégie de connexion à la base de données  MySQL
 */
 app.use(myConnection(mysql2, optionsConnexionBaseDeDonnees, "pool"));
 
@@ -46,12 +46,30 @@ app.get('/api/accueil', (req, res) => {
     console.log("Je passe dans /api/accueil");
  
   res.render('accueil');
-});
+})
 
 app.get('/api/equipe', (req,res) => {
     console.log("je passe dans /api/accueil");
 
-    res.render('equipe');
+    //1. Je meconnecte à la base de donnée à la méthodeonnection()
+    req.getConnection((erreur,connection) => {
+        if(erreur) { // je vérifie s'il ya une erreur lors de la connexion à la bdd
+            console.log(erreur);
+        } else {
+            connection.query("SELECT * FROM equipe", [], (err,resultatEquipe) => {
+                if (err) {
+                    console.log("Erreur dans la requête SQL SELECT: ", err);
+                } else {
+                    console.log("Mon équipe : ", resultatEquipe);
+
+                    // je retourne au client le résultat de la requête SQL
+                    res.render("equipe", {resultatEquipe});
+                }
+            });
+        }
+    });
+
+    // res.render('equipe');
 });
 
 app.get('/api/plat', (req,res) => {
