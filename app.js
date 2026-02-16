@@ -16,6 +16,9 @@ const path = require('path')
 // "app" représente notre application web
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // je configure les éléments attendus pour me connecter à la base de donnee
 const optionsConnexionBaseDeDonnees = {
     host: "localhost",
@@ -83,6 +86,29 @@ app.get('/api/contact', (req,res,) => {
 
     res.render('contact');
     
+});
+
+
+/* j'ajoute un fournisseur dans la table fournisseur. pour cela j'utilise la méthode post.
+*/ 
+app.post('/api/fournisseur', (req, res) => {
+    console.log("Corps de la requête : ", req.body.nomFournisseur);
+
+    console.log("Corps de la requête : ", req.body.prix);
+
+    console.log("Corps de la requête : ", req.body.telephoneFournisseur);
+
+    console.log("Corps de la requête : ", req.body.origine);
+
+    console.log("Corps de la requête : ", req.body.type);
+
+    console.log("Corps de la requête : ", req.body.mailFournisseur);
+});
+
+app.get('/api/fournisseur', (req,res) => {
+    console.log("je passe dans /api/fournisseur");
+
+    res.render('fournisseur');
 });
 
 // On exporte l'application pour pouvoir l'utiliser ailleurs
