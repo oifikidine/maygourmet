@@ -23,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 const optionsConnexionBaseDeDonnees = {
     host: "localhost",
     user: "root",
-    password: "Dembouzeur976",
+    password: "rsma2026",
     database: "maygourmet",
     port: 3306,
 };
