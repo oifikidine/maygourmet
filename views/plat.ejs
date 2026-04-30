@@ -2,35 +2,158 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nos plats - May Gourmet</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
- <!-- Inclure le fichier navbar.ejs pour avoir la barre de navigation -->
-   <%- include('navbar'); %>
+  <!-- Barre de navigation -->
+  <%- include('navbar'); %>
 
-  <!-- Section présentation des plats -->
-  <section>
-    <article>
-      <h2>Pizza Margherita</h2>
-      <p>Tomates fraîches, mozzarella et basilic. Une classique indémodable.</p>
-    </article>
+  <!-- Bandeau titre de la page -->
+  <div class="page-banner">
+    <h1>Nos plats 🍽️</h1>
+    <p>Cuisine mahoraise authentique — des saveurs de l'océan Indien</p>
+  </div>
 
-    <article>
-      <h2>Lasagnes à la bolognaise</h2>
-      <p>Des couches généreuses de pâtes, viande et sauce tomate maison.</p>
-    </article>
+  <!-- Contenu principal -->
+  <main>
 
-    <article>
-      <h2>Salade César</h2>
-      <p>Laitue croquante, poulet grillé, croûtons et parmesan.</p>
-    </article>
-  </section>
+    <section>
+      <h2>La carte</h2>
 
-  <!-- Pied de page -->
-  <footer>
-    <p>&copy; 2026 - May Gourmet</p>
-  </footer>
+      <!-- Barre de recherche + bouton Ajouter (même structure que équipe et fournisseur) -->
+      <div class="search-bar">
+        <input type="text" id="search-plats" placeholder="🔍 Rechercher un plat...">
+
+        <!-- Bouton qui ouvre la modal d'ajout -->
+        <button id="btnAjoutPlat" class="btn-modal">➕ Ajouter un plat</button>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           MODAL — Ajout d'un nouveau plat
+           Même structure que les autres modals du projet
+           ═══════════════════════════════════════════════════ -->
+      <div id="modalAjoutPlat" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeAjoutPlat">&times;</span>
+          <h2>➕ Ajouter un plat</h2>
+
+          <!-- Formulaire — action POST vers la route back-end -->
+          <form method="POST" action="/api/plat">
+
+            <p>
+              <label for="inputNomPlat">Nom du plat :</label><br>
+              <input type="text" id="inputNomPlat" name="nomPlat"
+                     placeholder="Ex : Mataba" required>
+            </p>
+            <p>
+              <label for="inputDescPlat">Description :</label><br>
+              <input type="text" id="inputDescPlat" name="description"
+                     placeholder="Courte description du plat">
+            </p>
+            <p>
+              <label for="inputPrixPlat">Prix (€) :</label><br>
+              <input type="number" id="inputPrixPlat" name="prix"
+                     placeholder="Ex : 12.50" step="0.01" required>
+            </p>
+            <p>
+              <label for="inputCategoriePlat">Catégorie :</label><br>
+              <input type="text" id="inputCategoriePlat" name="categorie"
+                     placeholder="Ex : Poisson, Viande, Végétarien...">
+            </p>
+            <p>
+              <label for="inputOriginePlat">Origine (facultatif) :</label><br>
+              <input type="text" id="inputOriginePlat" name="origine"
+                     placeholder="Mayotte" value="Mayotte">
+            </p>
+            <p>
+              <label for="inputPhotoPlat">URL de la photo (facultatif) :</label><br>
+              <input type="text" id="inputPhotoPlat" name="photo"
+                     placeholder="https://images.unsplash.com/...">
+            </p>
+
+            <button type="submit" class="btn-confirmer">Ajouter</button>
+            <button type="button" class="btn-annuler" id="btnFermerAjoutPlat">Annuler</button>
+          </form>
+
+        </div>
+      </div>
+      <!-- Fin modal ajout plat -->
+
+      <!-- Grille des cartes plats (style magazine avec photos) -->
+      <div class="cards-grid-plats" id="cards-grid-plats">
+        <% resultatPlat.forEach(result => { %>
+          <div class="card card-photo">
+
+            <!-- Face avant : photo + overlay nom + prix -->
+            <div class="card-front">
+
+              <!-- Photo du plat (ou image de remplacement si absente) -->
+              <% if (result.photo) { %>
+                <img src="<%= result.photo %>" alt="Photo de <%= result.nom %>">
+              <% } else { %>
+                <!-- Pas de photo : fond dégradé avec l'emoji du plat -->
+                <div style="
+                  width:100%; height:210px;
+                  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+                  display:flex; align-items:center; justify-content:center;
+                  font-size:4rem;
+                ">🍽️</div>
+              <% } %>
+
+              <!-- Overlay dégradé avec nom et prix -->
+              <div class="plat-overlay">
+                <h4><%= result.nom %></h4>
+                <span class="badge-prix"><%= result.prix %> €</span>
+              </div>
+
+              <!-- Bouton pour retourner la carte -->
+              <button class="btn-voir-plat flip-btn flip-btn-front">ℹ️ Voir les détails</button>
+            </div>
+
+            <!-- Face arrière : détails complets du plat -->
+            <div class="card-back">
+              <span class="card-back-icon">🍽️</span>
+              <h4><%= result.nom %></h4>
+
+              <!-- Badge catégorie -->
+              <% if (result.categorie) { %>
+                <span class="badge"><%= result.categorie %></span>
+              <% } %>
+
+              <!-- Description du plat -->
+              <% if (result.description) { %>
+                <p><em>"<%= result.description %>"</em></p>
+              <% } %>
+
+              <!-- Origine -->
+              <% if (result.origine) { %>
+                <p>🌍 Origine : <%= result.origine %></p>
+              <% } %>
+
+              <!-- Prix mis en avant -->
+              <p><strong style="color:var(--primary); font-size:1.1rem;"><%= result.prix %> €</strong></p>
+
+              <button class="flip-btn">← Retour</button>
+            </div>
+
+          </div>
+        <% }); %>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Pied de page enrichi -->
+  <%- include('footer'); %>
+
+  <!-- Scripts -->
+  <script src="/javascript/script.js"></script>
+  <script src="/javascript/effects.js"></script>
 
 </body>
 </html>

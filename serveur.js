@@ -18,7 +18,7 @@ app.set('port', numeroPort)
 const serveur = http.createServer(app)
 
 // On démarre le serveur
-// Il écoute sur le port 3001
+// Il écoute sur le port 3085
 serveur.listen(numeroPort, () => {
   console.log(
     "Le serveur de MayGourmet est à l'écoute sur le port",

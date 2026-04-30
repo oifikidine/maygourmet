@@ -2,28 +2,129 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>May Gourmet 🍽️</title>
-  <link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accueil - May Gourmet</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
 
-    <!-- Inclure le fichier navbar.ejs pour avoir la barre de navigation -->
-        <%- include('navbar'); %>
+  <!-- Barre de navigation (inclut loader, scroll bar, curseur, retour en haut) -->
+  <%- include('navbar'); %>
 
-  <h1>May Gourmet 🍽️</h1>
+  <!-- Section Hero -->
+  <section class="hero">
 
-  <p>
-    Bienvenue sur May Gourmet, un espace dédié à la cuisine gourmande
-    et aux saveurs authentiques.
-  </p>
+    <!-- Canvas particules (AI) -->
+    <canvas id="hero-canvas"></canvas>
 
-  <p>
-    Découvrez nos plats, notre passion et notre savoir-faire.
-  </p>
+    <!-- Contenu parallaxe (L) : monte doucement au scroll -->
+    <div class="hero-inner">
+      <span class="hero-emoji">🍽️</span>
+      <h1>May Gourmet</h1>
+      <p>
+        Bienvenue dans notre espace dédié à la cuisine gourmande
+        et aux saveurs authentiques de Mayotte.
+      </p>
+      <a href="/api/plat" class="hero-btn">Voir nos plats →</a>
+    </div>
 
-  <p>
-    📍 Cuisine maison • Produits frais • Goût avant tout
-  </p>
+    <!-- Vague SVG (E) : transition douce vers le fond de page -->
+    <div class="hero-wave">
+      <svg viewBox="0 0 1440 65" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path class="wave-fill" d="M0,32 C360,65 1080,0 1440,32 L1440,65 L0,65 Z" fill="#fff7f0"/>
+      </svg>
+    </div>
+
+  </section>
+
+  <!-- Section statistiques (AH) -->
+  <section class="stats-section">
+    <!-- Blobs décoratifs (AS) -->
+    <div class="blob-bg blob-1" aria-hidden="true"></div>
+    <div class="blob-bg blob-2" aria-hidden="true"></div>
+
+    <div class="stats-grid">
+
+      <div class="stat-item scroll-reveal" data-target="50">
+        <span class="stat-number">0</span><span class="stat-suffix">+</span>
+        <p class="stat-label">Plats au menu</p>
+      </div>
+
+      <div class="stat-item scroll-reveal" data-target="12">
+        <span class="stat-number">0</span><span class="stat-suffix"></span>
+        <p class="stat-label">Membres d'équipe</p>
+      </div>
+
+      <div class="stat-item scroll-reveal" data-target="5">
+        <span class="stat-number">0</span><span class="stat-suffix">★</span>
+        <p class="stat-label">Note clients</p>
+      </div>
+
+      <div class="stat-item scroll-reveal" data-target="8">
+        <span class="stat-number">0</span><span class="stat-suffix"> ans</span>
+        <p class="stat-label">D'expérience</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Cartes de mise en avant (scroll-reveal) -->
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════
+         MODAL BOXES — Exemple 1 : Modal d'information
+         Trigger : bouton "En savoir plus"
+         Contenu : présentation de May Gourmet
+         ═══════════════════════════════════════════════════ -->
+
+    <!-- Trigger/Open The Modal -->
+    <button id="myBtn" class="btn-modal">En savoir plus sur May Gourmet</button>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>🍽️ À propos de May Gourmet</h2>
+        <p>
+          May Gourmet est un restaurant dédié à la cuisine authentique de Mayotte.
+          Fondé en 2016, notre établissement propose des plats élaborés à partir
+          de produits frais et locaux, dans le respect des traditions culinaires mahoraises.
+        </p>
+        <p>Notre équipe de passionnés vous accueille du lundi au samedi.</p>
+      </div>
+    </div>
+    <!-- ═══════════════════════════════════════════════════ -->
+
+    <div class="hero-cards">
+
+      <div class="hero-card scroll-reveal">
+        <span class="hero-card-icon">👨‍🍳</span>
+        <h3>Notre équipe</h3>
+        <p>Des professionnels passionnés</p>
+      </div>
+
+      <div class="hero-card scroll-reveal">
+        <span class="hero-card-icon">🥘</span>
+        <h3>Nos plats</h3>
+        <p>Produits frais, goût avant tout</p>
+      </div>
+
+      <div class="hero-card scroll-reveal">
+        <span class="hero-card-icon">📍</span>
+        <h3>Cuisine maison</h3>
+        <p>Saveurs authentiques locales</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Pied de page enrichi -->
+  <%- include('footer'); %>
+
+  <!-- Scripts effets visuels -->
+  <script src="/javascript/effects.js"></script>
 
 </body>
 </html>

@@ -2,67 +2,308 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Notre équipe - May Gourmet</title>
-  <link rel="stylesheet" href="/css/equipe.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍽️</text></svg>">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
-
 <body>
 
-  <!-- Inclure le fichier navbar.ejs pour avoir la barre de navigation -->
-   <%- include('navbar'); %>
+  <!-- Barre de navigation -->
+  <%- include('navbar'); %>
 
-  <!-- Section présentation -->
-  <section>
-    <h2>Qui sommes-nous ?</h2>
-    <p>
-      Chez <strong>May Gourmet</strong>, notre équipe est composée de
-      professionnels passionnés par la cuisine et l’accueil.
-    </p>
-  </section>
+  <!-- Bandeau titre de la page -->
+  <div class="page-banner">
+    <h1>Notre équipe 👨‍🍳</h1>
+    <p>Des professionnels passionnés par la cuisine et l'accueil</p>
+  </div>
 
-  <!-- Section membres de l'équipe -->
-  <section>
-    <h2>L’équipe</h2>
-    <% resultatEquipe.forEach(resultat => { %>
-      <div class="card">
-        <img class="team" src="/image/royce.jpg">
-        <div class="container">
-         <h4><%= resultat.nom %></h4>
-        <p><%= resultat.poste %></p>
+  <!-- Contenu principal -->
+  <main>
+
+    <!-- Section présentation -->
+    <section>
+      <h2>Qui sommes-nous ?</h2>
+      <p>
+        Chez <strong>May Gourmet</strong>, notre équipe est composée de
+        professionnels passionnés par la cuisine et l'accueil.
+      </p>
+    </section>
+
+    <!-- Section membres de l'équipe (données depuis la BDD) -->
+    <section>
+      <h2>L'équipe</h2>
+
+      <!-- Barre de recherche + bouton Ajouter (côte à côte) -->
+      <div class="search-bar">
+        <input type="text" id="search-members" placeholder="🔍 Rechercher un membre...">
+
+        <!-- Trigger/Open The Modal (même principe que sur la page Accueil) -->
+        <button id="btnAjout" class="btn-modal">➕ Ajouter un membre</button>
+      </div>
+
+      <!-- The Modal (ajout d'un nouveau membre) -->
+      <div id="modalAjout" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <span class="close" id="closeAjout">&times;</span>
+          <h2>➕ Ajouter un membre</h2>
+
+          <!-- Formulaire d'ajout — action POST vers la route back-end existante -->
+          <form method="POST" action="/api/equipe">
+            <p>
+              <label for="inputNom">Nom :</label><br>
+              <input type="text" id="inputNom" name="nom"
+                     placeholder="Nom du membre" required>
+            </p>
+            <p>
+              <label for="inputTelephone">Téléphone :</label><br>
+              <input type="text" id="inputTelephone" name="telephone"
+                     placeholder="Ex : 0639001122" required>
+            </p>
+            <p>
+              <label for="inputPoste">Poste :</label><br>
+              <input type="text" id="inputPoste" name="poste"
+                     placeholder="Ex : Chef cuisinier" required>
+            </p>
+            <p>
+              <label for="inputEmail">Email (facultatif) :</label><br>
+              <input type="email" id="inputEmail" name="email"
+                     placeholder="Ex : jean@maygourmet.fr">
+            </p>
+            <p>
+              <label for="inputSalaire">Salaire (facultatif) :</label><br>
+              <input type="number" id="inputSalaire" name="salaire"
+                     placeholder="Ex : 1800">
+            </p>
+            <p>
+              <label for="inputDate">Date d'embauche (facultatif) :</label><br>
+              <input type="date" id="inputDate" name="date_embauche">
+            </p>
+            <button type="submit" class="btn-confirmer">Ajouter</button>
+            <button type="button" class="btn-annuler" id="btnFermerAjout">Annuler</button>
+          </form>
 
         </div>
       </div>
-        
-   <% }) %>
-    <article>
-      <h3>Chef cuisinier</h3>
-      <p>
-        Notre chef élabore des plats raffinés à partir de produits frais
-        et de saison.
-      </p>
-    </article>
+      <!-- Fin modal ajout -->
 
-    <article>
-      <h3>Sous-chef</h3>
-      <p>
-        Il accompagne le chef et veille à la qualité et à la régularité
-        des plats.
-      </p>
-    </article>
+      <!-- Skeleton placeholders (AK) — masqués dès que les vraies cartes sont prêtes -->
+      <div class="skeleton-grid" id="skeleton-grid">
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text short"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text short"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text short"></div>
+        </div>
+      </div>
 
-    <article>
-      <h3>Équipe en salle</h3>
-      <p>
-        Toujours souriante, notre équipe en salle vous garantit
-        un service chaleureux et professionnel.
-      </p>
-    </article>
-  </section>
+      <!-- ═══════════════════════════════════════════════════
+           MODAL BOXES — Exemple 2 : Modal de confirmation
+           Trigger : bouton "Supprimer" sur chaque carte
+           Contenu : demande de confirmation avant suppression
+           ═══════════════════════════════════════════════════ -->
 
-  <!-- Pied de page -->
-  <footer>
-    <p>&copy; 2026 - May Gourmet</p>
-  </footer>
+      <!-- Modal de confirmation de suppression -->
+      <div id="modalSupprimer" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeSupprimer">&times;</span>
+          <h2>⚠️ Confirmer la suppression</h2>
+          <p>Êtes-vous sûr de vouloir supprimer ce membre de l'équipe ?</p>
+          <p><strong>Cette action est irréversible.</strong></p>
+          <button class="btn-confirmer" id="btnConfirmerSupprimer">Oui, supprimer</button>
+          <button class="btn-annuler"   id="btnAnnulerSupprimer">Annuler</button>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════
+           MODAL — Modification d'un membre existant
+           Les champs sont pré-remplis via JS (ouvrirModalModification)
+           ═══════════════════════════════════════════════════ -->
+      <div id="modalModifier" class="modal">
+        <div class="modal-content">
+          <span class="close" id="closeModifier">&times;</span>
+          <h2>✏️ Modifier un membre</h2>
+
+          <!-- Formulaire de modification — POST vers la route /api/equipe/modifier -->
+          <form method="POST" action="/api/equipe/modifier">
+
+            <!-- Champ caché pour transmettre l'id du membre à modifier -->
+            <input type="hidden" id="inputIdModif" name="id">
+
+            <p>
+              <label for="inputNomModif">Nom :</label><br>
+              <input type="text" id="inputNomModif" name="nom"
+                     placeholder="Nom du membre" required>
+            </p>
+            <p>
+              <label for="inputTelModif">Téléphone :</label><br>
+              <input type="text" id="inputTelModif" name="telephone"
+                     placeholder="Ex : 0639001122" required>
+            </p>
+            <p>
+              <label for="inputPosteModif">Poste :</label><br>
+              <input type="text" id="inputPosteModif" name="poste"
+                     placeholder="Ex : Chef cuisinier" required>
+            </p>
+            <p>
+              <label for="inputEmailModif">Email (facultatif) :</label><br>
+              <input type="email" id="inputEmailModif" name="email"
+                     placeholder="Ex : jean@maygourmet.fr">
+            </p>
+            <p>
+              <label for="inputSalaireModif">Salaire (facultatif) :</label><br>
+              <input type="number" id="inputSalaireModif" name="salaire"
+                     placeholder="Ex : 1800">
+            </p>
+            <p>
+              <label for="inputDateModif">Date d'embauche (facultatif) :</label><br>
+              <input type="date" id="inputDateModif" name="date_embauche">
+            </p>
+
+            <button type="submit" class="btn-confirmer">Enregistrer</button>
+            <button type="button" class="btn-annuler" id="btnFermerModifier">Annuler</button>
+          </form>
+
+        </div>
+      </div>
+      <!-- ═══════════════════════════════════════════════════ -->
+
+      <!-- CSS Grid (AB) — affiché après 900ms par le JS (AK) -->
+      <div class="cards-grid" id="cards-grid" style="display:none">
+        <% resultatEquipe.forEach(result => { %>
+          <div class="card">
+
+            <%
+              /* Détection du genre : premier mot du nom */
+              /* Si le prénom se termine par 'a' ou 'ie' → féminin */
+              var premierMot   = result.nom.split(' ')[0].toLowerCase();
+              var estFemme     = premierMot.endsWith('a') || premierMot.endsWith('ie') || premierMot.endsWith('ine');
+              var avatarClasse = estFemme ? 'avatar-femme' : 'avatar-homme';
+              var avatarEmoji  = estFemme ? '👩‍🍳' : '👨‍🍳';
+
+              /* Formatage de la date pour l'input type="date" (format YYYY-MM-DD) */
+              var dateStr = '';
+              if (result.date_embauche) {
+                var d   = new Date(result.date_embauche);
+                var y   = d.getFullYear();
+                var mo  = String(d.getMonth() + 1).padStart(2, '0');
+                var day = String(d.getDate()).padStart(2, '0');
+                dateStr = y + '-' + mo + '-' + day;
+              }
+            %>
+
+            <!-- Face avant -->
+            <div class="card-front">
+              <!-- Avatar genre (remplace la photo) -->
+              <div class="avatar-cercle <%= avatarClasse %>"><%= avatarEmoji %></div>
+              <div class="container">
+                <h4><%= result.nom %></h4>
+                <!-- Badge de poste -->
+                <span class="badge"><%= result.poste %></span>
+                <br>
+                <button class="btn flip-btn flip-btn-front">ℹ️ Infos</button>
+                <!-- Bouton Modifier : passe les données du membre via data-* -->
+                <input
+                  type="button"
+                  value="Modifier"
+                  class="btn btn-edit"
+                  data-id="<%= result.id %>"
+                  data-nom="<%= result.nom %>"
+                  data-telephone="<%= result.telephone %>"
+                  data-poste="<%= result.poste %>"
+                  data-email="<%= result.email || '' %>"
+                  data-salaire="<%= result.salaire || '' %>"
+                  data-date="<%= dateStr %>"
+                  onclick="ouvrirModalModification(this)"
+                >
+                <input
+                  type="button"
+                  value="Supprimer"
+                  class="btn btn-danger"
+                  data-tooltip="Retirer ce membre"
+                  onclick="ouvrirModalSuppression('<%= result.id %>')"
+                >
+              </div>
+            </div>
+
+            <!-- Face arrière : affiche toutes les infos du membre -->
+            <div class="card-back">
+              <!-- Même avatar sur la face arrière -->
+              <span class="card-back-icon"><%= avatarEmoji %></span>
+              <h4><%= result.nom %></h4>
+              <span class="badge"><%= result.poste %></span>
+
+              <!-- Téléphone (toujours présent) -->
+              <p>📞 <%= result.telephone %></p>
+
+              <!-- Email (facultatif : affiché seulement s'il existe) -->
+              <% if (result.email) { %>
+                <p>✉️ <%= result.email %></p>
+              <% } %>
+
+              <!-- Salaire (facultatif) -->
+              <% if (result.salaire) { %>
+                <p>💶 <%= result.salaire %> €/mois</p>
+              <% } %>
+
+              <!-- Date d'embauche (facultatif) -->
+              <% if (result.date_embauche) { %>
+                <p>📅 Depuis le <%= new Date(result.date_embauche).toLocaleDateString('fr-FR') %></p>
+              <% } %>
+
+              <button class="flip-btn">← Retour</button>
+            </div>
+
+          </div>
+        <% }); %>
+      </div>
+    </section>
+
+    <!-- Section descriptions des postes (scroll-reveal) -->
+    <section>
+      <article class="scroll-reveal">
+        <h3>Chef cuisinier</h3>
+        <p>
+          Notre chef élabore des plats raffinés à partir de produits frais
+          et de saison.
+        </p>
+      </article>
+
+      <article class="scroll-reveal">
+        <h3>Sous-chef</h3>
+        <p>
+          Il accompagne le chef et veille à la qualité et à la régularité
+          des plats.
+        </p>
+      </article>
+
+      <article class="scroll-reveal">
+        <h3>Équipe en salle</h3>
+        <p>
+          Toujours souriante, notre équipe en salle vous garantit
+          un service chaleureux et professionnel.
+        </p>
+      </article>
+    </section>
+
+  </main>
+
+  <!-- Pied de page enrichi -->
+  <%- include('footer'); %>
+
+  <!-- Scripts -->
+  <script src="/javascript/script.js"></script>
+  <script src="/javascript/effects.js"></script>
 
 </body>
 </html>

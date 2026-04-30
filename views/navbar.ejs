@@ -1,10 +1,78 @@
+<!-- Barre de progression du scroll (I) -->
+<div id="scroll-progress"></div>
+
+<!-- Loader de page (C) -->
+<div id="page-loader">
+    <div class="loader-logo">May <span style="color:#ffd6d6">Gourmet</span> 🍽️</div>
+    <div class="loader-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</div>
+
+<!-- Curseur personnalisé (R) -->
+<div id="custom-cursor"></div>
+<div id="cursor-dot"></div>
+
+<!-- Bouton retour en haut (Q) -->
+<button id="back-to-top" aria-label="Retour en haut">↑</button>
+
+<!-- Lightbox (Y) -->
+<div id="lightbox">
+    <button class="lightbox-close" onclick="document.getElementById('lightbox').classList.remove('active')">&times;</button>
+    <img id="lightbox-img" src="" alt="Photo agrandie">
+</div>
+
+<!-- Ripple transition de thème (AU) -->
+<div id="theme-ripple"></div>
+
+<!-- Overlay menu mobile (AJ) -->
+<div id="nav-overlay" class="nav-overlay"></div>
+
 <header>
-    <div id="logo">logo</div>
-    <nav id="main">
-        <a href="accueil">Accueil</a>
-        <a href="equipe">Equipe</a>
-        <a href="plat">Plats</a>
-        <a href="contact">Contact</a>
-        <a href="fournisseur">Fournisseur</a>
+    <nav class="navbar">
+        <a href="/api/accueil" class="logo">May <span>Gourmet</span> 🍽️</a>
+
+        <!-- Bouton hamburger (AJ) -->
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/api/accueil"     class="<%= currentPath === '/api/accueil'     ? 'active' : '' %>">Accueil</a></li>
+            <li><a href="/api/equipe"      class="<%= currentPath === '/api/equipe'      ? 'active' : '' %>">Équipe</a></li>
+            <li><a href="/api/plat"        class="<%= currentPath === '/api/plat'        ? 'active' : '' %>">Plats</a></li>
+            <li><a href="/api/contact"     class="<%= currentPath === '/api/contact'     ? 'active' : '' %>">Contact</a></li>
+            <li><a href="/api/fournisseur" class="<%= currentPath === '/api/fournisseur' ? 'active' : '' %>">Fournisseur</a></li>
+            <!-- Bouton dark mode (F) -->
+            <li><button id="dark-toggle" title="Changer le thème">🌙</button></li>
+            <!-- Swatches de couleur (AF) -->
+            <li class="theme-swatches">
+                <button class="swatch swatch-red"   data-color="red"   title="Thème Rouge"  aria-label="Thème rouge"></button>
+                <button class="swatch swatch-green" data-color="green" title="Thème Vert"   aria-label="Thème vert"></button>
+                <button class="swatch swatch-blue"  data-color="blue"  title="Thème Bleu"   aria-label="Thème bleu"></button>
+            </li>
+        </ul>
     </nav>
 </header>
+
+<!-- Bannière défilante (AR) -->
+<div class="ticker-bar" aria-hidden="true">
+    <span class="ticker-content">
+        🍽️&nbsp; Cuisine authentique de Mayotte &nbsp;&nbsp;·&nbsp;&nbsp;
+        🥘&nbsp; Produits frais du terroir &nbsp;&nbsp;·&nbsp;&nbsp;
+        ⭐&nbsp; Note 5 étoiles &nbsp;&nbsp;·&nbsp;&nbsp;
+        👨‍🍳&nbsp; Équipe passionnée depuis 2016 &nbsp;&nbsp;·&nbsp;&nbsp;
+        🌴&nbsp; Saveurs locales authentiques &nbsp;&nbsp;·&nbsp;&nbsp;
+        🍲&nbsp; Recettes transmises de génération en génération &nbsp;&nbsp;·&nbsp;&nbsp;
+        🍽️&nbsp; Cuisine authentique de Mayotte &nbsp;&nbsp;·&nbsp;&nbsp;
+        🥘&nbsp; Produits frais du terroir &nbsp;&nbsp;·&nbsp;&nbsp;
+        ⭐&nbsp; Note 5 étoiles &nbsp;&nbsp;·&nbsp;&nbsp;
+        👨‍🍳&nbsp; Équipe passionnée depuis 2016 &nbsp;&nbsp;·&nbsp;&nbsp;
+        🌴&nbsp; Saveurs locales authentiques &nbsp;&nbsp;·&nbsp;&nbsp;
+        🍲&nbsp; Recettes transmises de génération en génération &nbsp;&nbsp;·&nbsp;&nbsp;
+    </span>
+</div>
